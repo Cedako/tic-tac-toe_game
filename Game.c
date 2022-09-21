@@ -51,12 +51,31 @@ void selectSymbol(){
 
 //Function that checks win condition
 int checkWin(){
-    
+    if(a[0]==a[1] && a[1]==a[2])
+        return 1;
+    else if(a[3]==a[4] && a[4]==a[5])
+        return 1;
+    else if(a[6]==a[7] && a[7]==a[8])
+        return 1;
+    else if(a[0]==a[3] && a[3]==a[6])
+        return 1;
+    else if(a[1]==a[4] && a[4]==a[7])
+        return 1;
+    else if(a[2]==a[5] && a[5]==a[8])
+        return 1;
+    else if(a[0]==a[4] && a[4]==a[8])
+        return 1;
+    else if(a[2]==a[4] && a[4]==a[6])
+        return 1;
+    else if(a[0]!='1' && a[1]!='2' && a[2]!='3' && a[3]!='4' && a[4]!='5' && a[5]!='6' && a[6]!='7' && a[7]!='8' && a[8]!='9')
+        return 0;
+    else
+        return -1;
 }
 
 //Main function
 int main(){
-    int sel,score=-1,player=1;
+    int sel,choice,score=-1,player=1;
     char symbol;
     system("cls");
     printf("\t\t ¡Welcome to tic tac toe! \n\n");
@@ -77,10 +96,54 @@ int main(){
         player=((player%2)?1:2);
         symbol=((player==1)?x:o);
 
+
+        //players play the game until score changes to either 0 or 1 (0 = draw, 1 = win)
+        if(player==1){
+            printf("Player 1 type any digit from 1 to 9 to insert a %c\n=> ",x);
+        } else {
+            printf("Player 2 type any digit from 1 to 9 to insert a %c\n=> ",o);
+        }
+        scanf(" %d",&choice);
+        symbol=((player==1)?x:o);
+
+        if(choice==1 && a[0]=='1')
+            a[0]=symbol;
+        else if(choice==2 && a[1]=='2')
+            a[1]=symbol;
+        else if(choice==3 && a[2]=='3')
+            a[2]=symbol;
+        else if(choice==4 && a[3]=='4')
+            a[3]=symbol;
+        else if(choice==5 && a[4]=='5')
+            a[4]=symbol;
+        else if(choice==6 && a[5]=='6')
+            a[5]=symbol;
+        else if(choice==7 && a[6]=='7')
+            a[6]=symbol;
+        else if(choice==8 && a[7]=='8')
+            a[7]=symbol;
+        else if(choice==9 && a[8]=='9')
+            a[8]=symbol;
+        else {printf("Wrong Selection\n");player--;}
+
         score=checkWin();
         player++;
         board();
     } while (score == -1);
+
+    if (score==1){
+        switch (player)
+        {
+        case 2:
+            printf("\n\nPlayer 1 wins\n\n");
+            break;
+        default:
+            printf("\n\nPlayer 2 wins\n\n");
+            break;
+        }
+    } else {
+        printf("Its a draw!\n\n");
+    }
     
     end:
     system("pause");
